@@ -125,4 +125,3 @@ class HaiVector(object):
     def __abs__(self):
         return self.module
 
-    def __neg
