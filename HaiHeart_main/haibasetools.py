@@ -1,10 +1,33 @@
 #   -*- coding: utf-8 -*-
+
+
+import haisettings
 import numbers
 import math
 import os
 import sys
 import time
 from HaiErrors import *
+
+
+def MAIN_VEC_TYPE_CHECKING(fuc):
+    """
+    检查必要运算语句(只在haisettings.HAI_MAIN_DEBUGE==True时有效)
+    :return:
+    """
+    if haisettings.HAI_MAIN_DEBUGE:
+        def checker(self: 'HaiVector', other: 'HaiVector'):
+            if type(self) is not HaiVector or type(other) is not HaiVector:
+                raise TypeError
+            if self.vectorLen != other.vectorLen:
+                raise TypeError
+            else:
+                fuc(self, other)
+
+        return checker
+
+    if not haisettings.HAI_MAIN_DEBUGE:
+        return fuc
 
 
 def get_opposite_vector(vector: "HaiVector") -> "HaiVector":
@@ -37,6 +60,7 @@ class MainVectorGetter:
     """
     获取向量属性的描述器
     """
+
     def __get__(self, instance: "HaiVector", owner=None) -> list[numbers.Number]:
         if isinstance(instance, HaiVector):
             return []
@@ -47,16 +71,17 @@ class HaiVector(object):
     MainGame中的向量类
     是一个可迭代对象
     遍历返回tuple(坐标列表中的位置，坐标)
-    例如：
-    f = HaiVector([1,2,3]);
-    for i in f:print(i);
-    输出：
-    (0,1);(1,2);(2,3);
-    支持向量加法，减法和点乘
-    + | -:向量线性加，减法；
-    * | @:向量数量积，点乘；
+    例如：\n
+    f = HaiVector([1,2,3])\n
+    for i in f: print(i)\n
+    输出：\n
+    (0,1);(1,2);(2,3)\n
+    支持向量加法，减法和点乘\n
+    :+  -:向量线性加，减法；\n
+    :*  @:向量数量积，点乘；\n
     支持一些增强赋值，如+=,-=,*=
     """
+
     def __init__(self, sport: list, *args: any) -> None:
         self.__sportList = sport
         self.__index = 0
@@ -80,35 +105,46 @@ class HaiVector(object):
     def __len__(self):
         return len(self.__sportList)
 
+    @MAIN_VEC_TYPE_CHECKING
     def __add__(self, other: "HaiVector") -> "HaiVector":
         for __sport in other:
             self.__sportList[__sport[0]] += __sport[1]
         return HaiVector(self.__sportList)
 
+    @MAIN_VEC_TYPE_CHECKING
     def __sub__(self, other: "HaiVector") -> "HaiVector":
         return self + get_opposite_vector(other)
 
+    @MAIN_VEC_TYPE_CHECKING
     def __mul__(self, other: numbers.Number) -> "HaiVector":
         alist = []
         for __index in range(self.vectorLen):
             alist.append(self.__sportList[__index] * other)
         return HaiVector(alist)
 
+    @MAIN_VEC_TYPE_CHECKING
     def __matmul__(self, other: "HaiVector") -> float:
         alist = []
         for __index in range(self.vectorLen):
             alist.append(self.__sportList[__index] * other.sportList[__index])
         return float(sum(alist))
 
+    @MAIN_VEC_TYPE_CHECKING
     def __iadd__(self, other: "HaiVector") -> "HaiVector":
         _self = self
         _self = self + other
         return _self
 
+    @MAIN_VEC_TYPE_CHECKING
     def __isub__(self, other: "HaiVector") -> "HaiVector":
         _self = self
         _self = self - other
         return _self
+
+    @MAIN_VEC_TYPE_CHECKING
+    def __eq__(self, other: "HaiVector") -> bool:
+        if self.sportList == other.sportList:
+            return True
 
     def __imul__(self, other: numbers.Number) -> "HaiVector":
         _self = self
@@ -122,6 +158,5 @@ class HaiVector(object):
     def __hash__(self) -> int:
         return hash(str(self))
 
-    def __abs__(self):
+    def __abs__(self) -> float:
         return self.module
-
