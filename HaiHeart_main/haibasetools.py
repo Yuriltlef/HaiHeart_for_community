@@ -12,17 +12,27 @@ from HaiErrors import *
 
 def MAIN_VEC_TYPE_CHECKING(fuc):
     """
-    检查必要运算语句(只在haisettings.HAI_MAIN_DEBUGE==True时有效)
-    :return:
+    检查必要运算语句(只在haisettings.HAI_MAIN_DEBUGE==True时有效)\n
+----if haisettings.HAI_MAIN_DEBUGE:\n
+--------def checker(self: "HaiVector", other: "HaiVector"):\n
+------------if type(self) is not HaiVector or type(other) is not HaiVector:\n
+----------------raise TypeError\n
+------------if self.vectorLen != other.vectorLen:\n
+----------------raise TypeError\n
+------------else:\n
+----------------return fuc(self, other)\n
+------------return checker\n
+----if not haisettings.HAI_MAIN_DEBUGE:\n
+--------return fuc\n
     """
     if haisettings.HAI_MAIN_DEBUGE:
-        def checker(self: 'HaiVector', other: 'HaiVector'):
+        def checker(self: "HaiVector", other: "HaiVector"):
             if type(self) is not HaiVector or type(other) is not HaiVector:
                 raise TypeError
             if self.vectorLen != other.vectorLen:
                 raise TypeError
             else:
-                fuc(self, other)
+                return fuc(self, other)
 
         return checker
 
@@ -56,14 +66,14 @@ def get_hai_module(vector: "HaiVector") -> float:
     return math.pow(sum(alist), 0.5)
 
 
-class MainVectorGetter:
-    """
-    获取向量属性的描述器
-    """
-
-    def __get__(self, instance: "HaiVector", owner=None) -> list[numbers.Number]:
-        if isinstance(instance, HaiVector):
-            return []
+# class MainVectorGetter:
+#    """
+#    获取向量属性的描述器
+#    """
+#
+#    def __get__(self, instance: "HaiVector", owner=None) -> list[numbers.Number]:
+#        if isinstance(instance, HaiVector):
+#            return []
 
 
 class HaiVector(object):
@@ -152,8 +162,9 @@ class HaiVector(object):
         return _self
 
     def __repr__(self) -> str:
-        return f"<A Vector object in {hex(id(self))},The" \
-               f" sport list is {str(self.__sportList)} >"
+        return f"<A Vector object in {hex(id(self))},\nThe" \
+               f" sport list is {str(self.__sportList)},\n" \
+               f"From \n{__file__} {type(self)}>"
 
     def __hash__(self) -> int:
         return hash(str(self))
