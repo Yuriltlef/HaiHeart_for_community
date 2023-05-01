@@ -1,3 +1,4 @@
-BSD 3-Clause License
-
-Copyright (c) 2023, Flepis
+#Copyright (c) 2023, Flepis, Anmanus
+#ALL RIGHTS RESERVED
+#
+#Mozilla Public License Version 2.0

@@ -1,9 +1,9 @@
 #   -*- coding: utf-8 -*-
 #
+#Copyright (c) 2023, Flepis, Anmanus
+#ALL RIGHTS RESERVED
 #
-#BSD 3-Clause License
-#
-#Copyright (c) 2023, Flepis
+#Mozilla Public License Version 2.0
 
 
 HAI_MAIN_DEBUGE = True
