@@ -1,9 +1,9 @@
 #   -*- coding: utf-8 -*-
 #
 #
-#BSD 3-Clause License
+# BSD 3-Clause License
 #
-#Copyright (c) 2023, Flepis
+# Copyright (c) 2023, Flepis
 
 
 import haisettings
@@ -64,6 +64,15 @@ def get_hai_module(vector: "HaiVector") -> float:
     return math.pow(sum(alist), 0.5)
 
 
+def del_unsupported_attr(cls: any, **kwargs) -> dict[str, any]:
+    """
+    动态地删除子类中不需要的属性
+    :param cls:
+    :param kwargs:
+    :return:
+    """
+    cls.__dict__[kwargs]
+
 # class MainVectorGetter:
 #    """
 #    获取向量属性的描述器
@@ -97,6 +106,12 @@ class HaiVector(object):
         self.module = get_hai_module(self)
         self.coordinate = self.__coordinate
         self.__slots__ = ['vectorLen', 'module', 'coordinate']
+
+    def __init_subclass__(cls, /, hook=None, tags: dict = None, **kwargs):
+        super().__init_subclass__(**kwargs)
+        cls.direction_vector = HaiVector
+        if hook:
+            hook(cls, **tags)
 
     def __iter__(self):
         return self
@@ -161,6 +176,55 @@ class HaiVector(object):
 
     def __repr__(self) -> str:
         return f"<A Vector object in {hex(id(self))},\nThe" \
+               f" coordinate list is {str(self.__coordinate)},\n" \
+               f"From \n{__file__} {type(self)}>"
+
+    def __hash__(self) -> int:
+        return hash(str(self))
+
+    def __abs__(self) -> float:
+        return self.module
+
+
+class HaiLine(HaiVector, hook=del_unsupported_attr, name = 'name'):
+    """
+    定义线段对象
+    继承自HaiVector
+    """
+
+    def __init__(self, start_coordinate: list, end_coordinate: list):
+        super().__init__([(x1 - x2) for x1, x2 in zip(start_coordinate, end_coordinate)])
+        self.name = 1
+
+    def __len__(self):
+        return len(self.__coordinate)
+
+    def __add__(self, other: "HaiVector") -> "HaiVector":
+        return NotImplemented
+
+    def __sub__(self, other: "HaiVector") -> "HaiVector":
+        return NotImplemented
+
+    def __matmul__(self, other: "HaiVector") -> float:
+        return NotImplemented
+
+    def __iadd__(self, other: "HaiVector") -> "HaiVector":
+        return NotImplemented
+
+    def __isub__(self, other: "HaiVector") -> "HaiVector":
+        return NotImplemented
+
+    def __eq__(self, other: "HaiVector") -> bool:
+        return NotImplemented
+
+    def __mul__(self, other: numbers.Number) -> "HaiVector":
+        return NotImplemented
+
+    def __imul__(self, other: numbers.Number) -> "HaiVector":
+        return NotImplemented
+
+    def __repr__(self) -> str:
+        return f"<A Line object in {hex(id(self))},\nThe" \
                f" coordinate list is {str(self.__coordinate)},\n" \
                f"From \n{__file__} {type(self)}>"
 
