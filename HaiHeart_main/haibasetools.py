@@ -64,14 +64,15 @@ def get_hai_module(vector: "HaiVector") -> float:
     return math.pow(sum(alist), 0.5)
 
 
-def del_unsupported_attr(cls: any, **kwargs) -> dict[str, any]:
+def del_unsupported_attr(instance: any, **kwargs) -> dict[str, any]:
     """
     动态地删除子类中不需要的属性
-    :param cls:
+    :param instance:
     :param kwargs:
     :return:
     """
-    cls.__dict__[kwargs]
+    instance.__dict__[kwargs]
+
 
 # class MainVectorGetter:
 #    """
@@ -186,7 +187,7 @@ class HaiVector(object):
         return self.module
 
 
-class HaiLine(HaiVector, hook=del_unsupported_attr, name = 'name'):
+class HaiLine(HaiVector):
     """
     定义线段对象
     继承自HaiVector
