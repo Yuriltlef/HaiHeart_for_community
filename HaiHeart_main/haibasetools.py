@@ -12,7 +12,7 @@ import math
 import os
 import sys
 import time
-from HaiErrors import *
+from HaiHeart_main.HaiErrors import *
 
 
 def MAIN_VEC_TYPE_CHECKING(fuc):
