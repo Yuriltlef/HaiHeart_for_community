@@ -167,5 +167,5 @@ class HaiVector(object):
     def __hash__(self) -> int:
         return hash(str(self))
 
-    def __abs__(self) -> float:
-        return self.module
+    #def __abs__(self) -> float:
+    #    return self.module
