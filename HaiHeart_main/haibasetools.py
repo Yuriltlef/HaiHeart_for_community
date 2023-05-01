@@ -18,17 +18,6 @@ from HaiErrors import *
 def MAIN_VEC_TYPE_CHECKING(fuc):
     """
     检查必要运算语句(只在haisettings.HAI_MAIN_DEBUGE==True时有效)\n
-----if haisettings.HAI_MAIN_DEBUGE:\n
---------def checker(self: "HaiVector", other: "HaiVector"):\n
-------------if type(self) is not HaiVector or type(other) is not HaiVector:\n
-----------------raise TypeError\n
-------------if self.vectorLen != other.vectorLen:\n
-----------------raise TypeError\n
-------------else:\n
-----------------return fuc(self, other)\n
-------------return checker\n
-----if not haisettings.HAI_MAIN_DEBUGE:\n
---------return fuc\n
     """
     if haisettings.HAI_MAIN_DEBUGE:
         def checker(self: "HaiVector", other: "HaiVector"):
