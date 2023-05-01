@@ -53,8 +53,8 @@ def get_opposite_vector(vector: "HaiVector") -> "HaiVector":
     :rtype: HaiVector
     """
     alist = []
-    for sport_tuple in vector:
-        alist.append(-sport_tuple[1])
+    for coordinate_tuple in vector:
+        alist.append(-coordinate_tuple[1])
     return HaiVector(alist)
 
 
@@ -97,13 +97,13 @@ class HaiVector(object):
     支持一些增强赋值，如+=,-=,*=
     """
 
-    def __init__(self, sport: list, *args: any) -> None:
-        self.__sportList = sport
+    def __init__(self, coordinate: list, *args: any) -> None:
+        self.__coordinate = coordinate
         self.__index = 0
         self.vectorLen = len(self)
         self.module = get_hai_module(self)
-        self.sportList = self.__sportList
-        self.__slots__ = ['vectorLen', 'module', 'sportList']
+        self.coordinate = self.__coordinate
+        self.__slots__ = ['vectorLen', 'module', 'coordinate']
 
     def __iter__(self):
         return self
@@ -111,20 +111,20 @@ class HaiVector(object):
     def __next__(self) -> tuple[int, any]:
         if self.__index < self.vectorLen:
             self.__index += 1
-            return self.__index - 1, self.__sportList[self.__index - 1]
+            return self.__index - 1, self.__coordinate[self.__index - 1]
 
         if self.__index == self.vectorLen:
             self.__index = 0
             raise StopIteration
 
     def __len__(self):
-        return len(self.__sportList)
+        return len(self.__coordinate)
 
     @MAIN_VEC_TYPE_CHECKING
     def __add__(self, other: "HaiVector") -> "HaiVector":
-        for __sport in other:
-            self.__sportList[__sport[0]] += __sport[1]
-        return HaiVector(self.__sportList)
+        for __coordinate in other:
+            self.__coordinate[__coordinate[0]] += __coordinate[1]
+        return HaiVector(self.__coordinate)
 
     @MAIN_VEC_TYPE_CHECKING
     def __sub__(self, other: "HaiVector") -> "HaiVector":
@@ -134,14 +134,14 @@ class HaiVector(object):
     def __mul__(self, other: numbers.Number) -> "HaiVector":
         alist = []
         for __index in range(self.vectorLen):
-            alist.append(self.__sportList[__index] * other)
+            alist.append(self.__coordinate[__index] * other)
         return HaiVector(alist)
 
     @MAIN_VEC_TYPE_CHECKING
     def __matmul__(self, other: "HaiVector") -> float:
         alist = []
         for __index in range(self.vectorLen):
-            alist.append(self.__sportList[__index] * other.sportList[__index])
+            alist.append(self.__coordinate[__index] * other.coordinate[__index])
         return float(sum(alist))
 
     @MAIN_VEC_TYPE_CHECKING
@@ -158,7 +158,7 @@ class HaiVector(object):
 
     @MAIN_VEC_TYPE_CHECKING
     def __eq__(self, other: "HaiVector") -> bool:
-        if self.sportList == other.sportList:
+        if self.coordinate == other.coordinate:
             return True
 
     def __imul__(self, other: numbers.Number) -> "HaiVector":
@@ -168,7 +168,7 @@ class HaiVector(object):
 
     def __repr__(self) -> str:
         return f"<A Vector object in {hex(id(self))},\nThe" \
-               f" sport list is {str(self.__sportList)},\n" \
+               f" coordinate list is {str(self.__coordinate)},\n" \
                f"From \n{__file__} {type(self)}>"
 
     def __hash__(self) -> int:
