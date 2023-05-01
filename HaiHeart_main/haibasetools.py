@@ -32,6 +32,10 @@ def MAIN_VEC_TYPE_CHECKING(fuc):
     """
     if haisettings.HAI_MAIN_DEBUGE:
         def checker(self: "HaiVector", other: "HaiVector"):
+            if fuc.__name__ == '__mul__':
+                if not isinstance(other, numbers.Number):
+                    raise TypeError
+                return fuc(self, other)
             if type(self) is not HaiVector or type(other) is not HaiVector:
                 raise TypeError
             if self.vectorLen != other.vectorLen:
@@ -131,13 +135,6 @@ class HaiVector(object):
         return self + get_opposite_vector(other)
 
     @MAIN_VEC_TYPE_CHECKING
-    def __mul__(self, other: numbers.Number) -> "HaiVector":
-        alist = []
-        for __index in range(self.vectorLen):
-            alist.append(self.__coordinate[__index] * other)
-        return HaiVector(alist)
-
-    @MAIN_VEC_TYPE_CHECKING
     def __matmul__(self, other: "HaiVector") -> float:
         alist = []
         for __index in range(self.vectorLen):
@@ -160,6 +157,13 @@ class HaiVector(object):
     def __eq__(self, other: "HaiVector") -> bool:
         if self.coordinate == other.coordinate:
             return True
+
+    @MAIN_VEC_TYPE_CHECKING
+    def __mul__(self, other: numbers.Number) -> "HaiVector":
+        alist = []
+        for __index in range(self.vectorLen):
+            alist.append(self.__coordinate[__index] * other)
+        return HaiVector(alist)
 
     def __imul__(self, other: numbers.Number) -> "HaiVector":
         _self = self
