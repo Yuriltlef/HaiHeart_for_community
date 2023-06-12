@@ -6,6 +6,8 @@
 #Mozilla Public License Version 2.0
 
 
+import pyopencl
+import numpy
 import haisettings
 import numbers
 import math
