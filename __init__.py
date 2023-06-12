@@ -1,9 +1,9 @@
 #   -*- coding: utf-8 -*-
 #
 #
-#Mozilla Public License Version 2.0
+# Mozilla Public License Version 2.0
 #
-#Copyright (c) 2023, Flepis
+# Copyright (c) 2023, Flepis
 
 
 import HaiHeart_main
