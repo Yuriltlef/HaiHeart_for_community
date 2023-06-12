@@ -1,9 +1,8 @@
 #   -*- coding: utf-8 -*-
 #
 #
-#BSD 3-Clause License
-#
-#Copyright (c) 2023, Flepis
+
+# Copyright (c) 2023, Flepis
 
 
 import haisettings
@@ -17,9 +16,9 @@ from HaiErrors import *
 
 def MAIN_VEC_TYPE_CHECKING(fuc):
     """
-    检查必要运算语句(只在haisettings.HAI_MAIN_DEBUGE==True时有效)\n
+    检查必要运算语句(只在haisettings.HAI_MAIN_DEBUG==True时有效)\n
     """
-    if haisettings.HAI_MAIN_DEBUGE:
+    if haisettings.HAI_MAIN_DEBUG:
         def checker(self: "HaiVector", other: "HaiVector"):
             if fuc.__name__ == '__mul__':
                 if not isinstance(other, numbers.Number):
@@ -34,7 +33,7 @@ def MAIN_VEC_TYPE_CHECKING(fuc):
 
         return checker
 
-    if not haisettings.HAI_MAIN_DEBUGE:
+    if not haisettings.HAI_MAIN_DEBUG:
         return fuc
 
 

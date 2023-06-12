@@ -6,4 +6,4 @@
 #Copyright (c) 2023, Flepis
 
 
-HAI_MAIN_DEBUGE = True
+HAI_MAIN_DEBUG = True
