@@ -215,7 +215,7 @@ class HaiSystemOut(object):
     def type_chooser(input_type: any = None, judgment_fuc: typing.Callable = None, **kwargs) -> str:
         """
         judgment_fuc为可调用类型，且应该返回对输入类型判断结果\n
-        返回值应该为一段有意义的字符串\n
+        返回值应该为一段有意义的字符串，默认为INFO,WARN,ERROR\n
         如果未提供judgment_fuc，默认返回"INFO"\n
         安全警告：judgment_fuc永远不应该执行钩子类型，以防止意外的执行或注入代码
         """
@@ -225,7 +225,8 @@ class HaiSystemOut(object):
         else:
             return "INFO"
 
-    def thread_name(self) -> str:
+    @staticmethod
+    def thread_name() -> str:
         """
         获得当前进程的名称
         """
@@ -248,6 +249,3 @@ class HaiSystemOut(object):
         """
         with open(path, "a+") as file:
             file.write(self.__logs)
-
-
-
