@@ -5,13 +5,14 @@
 # Copyright (c) 2023, Flepis
 
 
-import haisettings
+from . import haisettings
+from .HaiErrors import *
 import numbers
 import math
+import typing
 import os
 import sys
 import time
-from HaiErrors import *
 
 
 def MAIN_VEC_TYPE_CHECKING(fuc):
@@ -55,7 +56,7 @@ def get_hai_module(vector: "HaiVector") -> float:
     求向量的模
     :rtype: float
     :param vector:
-    :return:
+    :return: 
     """
     alist = []
     for sport_tuple in vector:
@@ -89,6 +90,7 @@ class HaiVector(object):
     支持一些增强赋值，如+=,-=,*=
     """
 
+    # noinspection PyUnusedLocal
     def __init__(self, coordinate: list, *args: any) -> None:
         self.__coordinate = coordinate
         self.__index = 0
@@ -168,3 +170,84 @@ class HaiVector(object):
 
     def __abs__(self) -> float:
         return self.module
+
+
+# noinspection PyUnusedLocal
+class HaiSystemOut(object):
+    """
+    格式化输出结果
+    """
+
+    def __init__(self, input_type: any = None,
+                 judgment_fuc: typing.Callable = None,
+                 stream_head_chooser_kwargs: dict = {},
+                 type_chooser_kwargs: dict = {},
+                 **kwargs):
+
+        self.__input_type = input_type
+
+        self.__stream_head = self.stream_head_chooser(input_type=input_type, judgment_fuc=judgment_fuc,
+                                                      **stream_head_chooser_kwargs)
+
+        self.__type = self.type_chooser(input_type=input_type,
+                                        judgment_fuc=judgment_fuc,
+                                        **type_chooser_kwargs)
+
+        self.__format = "[{}][{}][{}][{}]"
+
+        self.__logs = ""
+
+    @staticmethod
+    def stream_head_chooser(input_type: any = None, judgment_fuc: typing.Callable = None, **kwargs) -> str:
+        """
+        judgment_fuc为可调用类型，且应该返回对输入类型判断结果\n
+        返回值应该为一段有意义的字符串\n
+        如果未提供judgment_fuc，默认返回"HaiMain"\n
+        安全警告：judgment_fuc永远不应该执行钩子类型，以防止意外的执行或注入代码
+        """
+        if judgment_fuc:
+            return judgment_fuc(input_type, **kwargs)
+
+        else:
+            return "HaiMain"
+
+    @staticmethod
+    def type_chooser(input_type: any = None, judgment_fuc: typing.Callable = None, **kwargs) -> str:
+        """
+        judgment_fuc为可调用类型，且应该返回对输入类型判断结果\n
+        返回值应该为一段有意义的字符串\n
+        如果未提供judgment_fuc，默认返回"INFO"\n
+        安全警告：judgment_fuc永远不应该执行钩子类型，以防止意外的执行或注入代码
+        """
+        if judgment_fuc:
+            return judgment_fuc(input_type, **kwargs)
+
+        else:
+            return "INFO"
+
+    def thread_name(self) -> str:
+        """
+        获得当前进程的名称
+        """
+        return __name__
+
+    def log_out(self, log_text: str = '') -> None:
+        """
+        打印日志
+        """
+        __log = "[{}][{}][{}][{}]".format(time.strftime("%Y %B %d %H:%M:%S"), self.__stream_head,
+                                          self.thread_name(),
+                                          self.__type) + log_text
+        print(__log)
+
+        self.__logs += (__log + log_text + "\n")
+
+    def logs_writer(self, path: str) -> None:
+        """
+        写入日志文件
+        """
+        with open(path, "a+") as file:
+            file.write(self.__logs)
+
+
+

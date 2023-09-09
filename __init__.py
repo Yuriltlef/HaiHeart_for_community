@@ -5,7 +5,6 @@
 #
 # Copyright (c) 2023, Flepis
 
-
-import HaiHeart_main
+from . import HaiHeart_main
 
 VERSION = "1.0.0"
