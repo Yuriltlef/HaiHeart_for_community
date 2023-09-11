@@ -12,6 +12,7 @@ import math
 import typing
 import os
 import sys
+import p
 import time
 
 
@@ -249,3 +250,6 @@ class HaiSystemOut(object):
         """
         with open(path, "a+") as file:
             file.write(self.__logs)
+
+
+# class HaiThread()

@@ -7,3 +7,7 @@
 
 
 HAI_MAIN_DEBUG = True
+
+HAI_HEART_VERSION = "Beta1.0.0"
+
+
