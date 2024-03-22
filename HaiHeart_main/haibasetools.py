@@ -6,6 +6,7 @@
 
 
 from . import haisettings
+from .haisettings import INVISIBLE, READ_ONLY, READ_WRITE
 from .HaiErrors import *
 import numbers
 import math
@@ -64,14 +65,43 @@ def get_hai_module(vector: "HaiVector") -> float:
     return math.pow(sum(alist), 0.5)
 
 
-# class MainVectorGetter:
-#    """
-#    获取向量属性的描述器
-#    """
-#
-#    def __get__(self, instance: "HaiVector", owner=None) -> list[numbers.Number]:
-#        if isinstance(instance, HaiVector):
-#            return []
+class HaiVisitLimiter:
+    """
+    一个描述器，限制访问特定属性
+    默认为只读
+    """
+
+    def __init__(self, name, mode=READ_ONLY):
+        self.__mode = mode
+        self.__name = name
+
+    def __get__(self, instance, owner=None):
+        raise NameError
+        # if self.__mode == READ_ONLY or READ_WRITE:
+        #     return instance.__dict__[self.__name]
+        #
+        # if self.__mode == INVISIBLE:
+        #     raise
+        #
+        # else:
+        #     raise
+
+    def __set__(self, instance, value):
+        if self.__mode == READ_WRITE:
+            return instance.__dict__[self.__name]
+
+        if self.__mode == INVISIBLE or READ_ONLY:
+            raise
+
+        else:
+            raise
+
+    def __delete__(self, instance):
+        if self.__mode == INVISIBLE or READ_ONLY:
+            raise
+
+        if self.__mode == READ_WRITE:
+            del instance.__dict__[self.__name]
 
 
 class HaiVector(object):
@@ -80,7 +110,7 @@ class HaiVector(object):
     是一个可迭代对象
     遍历返回tuple(坐标列表中的位置，坐标)
     例如：\n
-    f = HaiVector([1,2,3])\n
+    f = Hai_Vector([1,2,3])\n
     for i in f: print(i)\n
     输出：\n
     (0,1);(1,2);(2,3)\n
@@ -172,11 +202,12 @@ class HaiVector(object):
         return self.module
 
 
-# noinspection PyUnusedLocal
-class HaiSystemOut(object):
+class HaiLogs(object):
     """
-    格式化输出结果
+    日志功能的实现
     """
+
+    logs = HaiVisitLimiter(name="_HaiLogs__logs")
 
     def __init__(self, input_type: any = None,
                  judgment_fuc: typing.Callable = None,
@@ -196,6 +227,16 @@ class HaiSystemOut(object):
         self.__format = "[{}][{}][{}][{}]"
 
         self.__logs = ""
+
+    def hai_log(self, log_text: str = '') -> None:
+        """
+        打印日志
+        """
+        __log = "[{}][{}][{}][{}]".format(time.strftime("%Y %B %d %H:%M:%S"), self.__stream_head,
+                                          self.thread_name(),
+                                          self.__type) + log_text
+
+        self.__logs += (__log + log_text + "\n")
 
     @staticmethod
     def stream_head_chooser(input_type: any = None, judgment_fuc: typing.Callable = None, **kwargs) -> str:
@@ -228,7 +269,7 @@ class HaiSystemOut(object):
     @staticmethod
     def thread_name() -> str:
         """
-        获得当前进程的名称
+        获得当前进程的名称（未完工）
         """
         return __name__
 
@@ -236,12 +277,13 @@ class HaiSystemOut(object):
         """
         打印日志
         """
-        __log = "[{}][{}][{}][{}]".format(time.strftime("%Y %B %d %H:%M:%S"), self.__stream_head,
+        __log = "[{}][{}][{}][{}]".format(time.strftime("%Y %B %d %H:%M:%S"), 
+                                          self.__stream_head,
                                           self.thread_name(),
                                           self.__type) + log_text
         print(__log)
 
-        self.__logs += (__log + log_text + "\n")
+        # self.__logs += (__log + log_text + "\n")
 
     def logs_writer(self, path: str) -> None:
         """
@@ -249,6 +291,5 @@ class HaiSystemOut(object):
         """
         with open(path, "a+") as file:
             file.write(self.__logs)
-
 
 # class HaiThread()
