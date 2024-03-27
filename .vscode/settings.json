@@ -1,0 +1,31 @@
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.code-search": true
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".vs/":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/.vs/":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/x64/":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/.gitignore":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/HaiHeartCppDlls.sln":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/HaiHeartCppDlls.vcxproj":true,
+        "HaiHeartCpp/HaiDlls_VS_x64/HaiHeartCppDlls/HaiHeartCppDlls.vcxproj.filters":true,
+        "HaiHeartCpp/HaiHeartMath/HaiHeartCppDlls/HaiHeartCppDlls.vcxproj.user":true,
+        "HaiHeartCpp/HaiHeartMath/.vs/":true,
+        "HaiHeartCpp/HaiHeartMath/x64/":true,
+        "HaiHeartCpp/HaiHeartMath/.gitignore":true,
+        "HaiHeartCpp/HaiHeartMath/HaiHeartMath.sln":true,
+        "HaiHeartCpp/HaiHeartMath/HaiHeartMath.vcxproj":true,
+        "HaiHeartCpp/HaiHeartMath/HaiHeartMath.vcxproj.filters":true,
+        "HaiHeartCpp/HaiHeartMath/HaiHeartMath.vcxproj.user":true,
+    }
+}
