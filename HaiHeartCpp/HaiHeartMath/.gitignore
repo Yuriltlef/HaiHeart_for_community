@@ -1,0 +1,6 @@
+# 默认忽略的文件
+.vs/
+HaiHeartMath.sln
+HaiHeartMath.vcxproj
+HaiHeartMath.vcxproj.filters
+HaiHeartMath.vcxproj.user
