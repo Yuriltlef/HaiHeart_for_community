@@ -1,6 +1,0 @@
-# 默认忽略的文件
-__pycache__/
-.idea/
-venv/
-qodana.yaml
-HaiHeart_cpp/HaiDlls_VS_x64/HaiHeartCppDlls/.vs/
