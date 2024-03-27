@@ -1,2 +1,6 @@
 # 默认忽略的文件
 .vs/
+HaiHeartCppDlls.sln
+HaiHeartCppDlls.vcxproj
+HaiHeartCppDlls.vcxproj.filters
+HaiHeartCppDlls.vcxproj.user
