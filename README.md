@@ -1,8 +1,9 @@
-## Copyright (c) 2023, Flepis, Anmanus
-* ALL RIGHTS RESERVED
+# Copyright (c) 2023, Yurilt, Anmanus
 
-* This is an open source game engine based on Python and *  PyPy
+- ALL RIGHTS RESERVED
 
-* HaiHeart aims to provide efficient game development
-* 
-* Just this
+- This is an open source game engine based on Python and \* PyPy
+
+- HaiHeart aims to provide efficient game development
+-
+- Just this
