@@ -3,4 +3,6 @@
 HaiHeartCppDlls.sln
 HaiHeartCppDlls.vcxproj
 HaiHeartCppDlls.vcxproj.filters
+HaiHeartCppDlls/
 HaiHeartCppDlls.vcxproj.user
+x64/
