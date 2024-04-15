@@ -1,19 +1,10 @@
-from HaiHeart_main.haibasetools import HaiLogs
-import time
-from HaiHeart_main.haibasetools import HaiVector
-from random import random
+class Vector:
+    def __init__(self, point_list):
+        self.point_list = point_list
 
-g = HaiLogs()
-for i in range(10000):
-    
-    time.sleep(0)
-    g.log_out()
+    def print_list(self):
+        for i in self.point_list:
+            print(i)
 
-# h = []
-# for i in range(1000):
-#     h.append(HaiVector([random(), random(), random()]))
-
-# for v in h:
-#     print(v)
-
-input()
+f = Vector([1,2,3,1])
+f.print_list()
